@@ -1,0 +1,39 @@
+### Moon-Zen V3: Extended Description
+
+**Moon-Zen V3** is the latest evolution of the Moon-Zen series, crafted specifically for Roblox's "Zombie Attack" game. This powerful and feature-rich script is designed to give players an unparalleled advantage in-game, offering a suite of advanced functionalities that cater to both casual players and competitive enthusiasts.
+
+#### Key Features:
+
+1. **Silent Aim:**
+   - A highly optimized Silent Aim that allows players to hit their targets with precision, all while staying under the radar. The feature calculates the nearest zombie and ensures every shot connects, giving you a seamless gameplay experience.
+
+2. **Aimbot:**
+   - The Aimbot in Moon-Zen V3 is engineered for accuracy and smoothness. With customizable FOV and smoothness sliders, you can fine-tune your aim to be as aggressive or as subtle as you like. This feature guarantees that no zombie will escape your crosshairs.
+
+3. **ESP (Extra Sensory Perception):**
+   - Moon-Zen V3's ESP feature enables you to see all zombies through walls, ensuring you are never caught off guard. Customize your ESP to display Tracers, Boxes, and Names, giving you full situational awareness. You can easily track every zombie's movement and position on the map, ensuring they won't sneak up on you.
+
+4. **Kill All:**
+   - This feature lets you wipe out every zombie in sight with the mere act of holding a gun in your inventory. Whether you're overwhelmed by hordes or just want to clear the field quickly, Kill All gives you the power to dominate the game effortlessly.
+
+5. **Tracers and Boxes:**
+   - Enable Tracers to draw lines from your character to each zombie, helping you visually track them across the map. The Boxes feature outlines each zombie, making it easy to distinguish and prioritize targets. These visual aids are perfect for players who want a tactical edge in fast-paced scenarios.
+
+6. **Names Display:**
+   - Know your enemy by enabling the Names feature, which displays the names of zombies above their heads. This, combined with the other ESP features, ensures that you're always aware of which zombies are lurking nearby.
+
+7. **Robust Error Handling:**
+   - Moon-Zen V3 is designed with stability in mind. Utilizing xpcall and pcall for error handling, the script runs smoothly even in unexpected scenarios, reducing the risk of crashes or unintended behavior during gameplay.
+
+8. **Customizable and User-Friendly Interface:**
+   - Powered by MoonLib, Moon-Zen V3 provides a sleek and intuitive GUI that makes customization straightforward. Players can easily toggle features on and off, adjust settings like Aimbot FOV and smoothness, and receive in-game notifications confirming feature activation.
+
+9. **Notifications:**
+   - Upon loading, the script provides visual feedback to confirm successful activation. The "Moon-Zen V3 Has Loaded!" notification ensures you're ready to play, and the Discord contact (discord - meowbucks) is provided for further support or community engagement.
+
+10. **Compatibility:**
+    - Moon-Zen V3 is designed to work seamlessly with a wide range of executors, ensuring that users across different platforms can enjoy its features without compatibility issues.
+
+#### Final Thoughts:
+
+Moon-Zen V3 is not just another script—it's a comprehensive toolset for any serious "Zombie Attack" player. Whether you're looking to improve your aim, gain full map awareness, or simply have fun dominating the battlefield, Moon-Zen V3 has you covered. Join the ranks of elite players and experience the game like never before with Moon-Zen V3!

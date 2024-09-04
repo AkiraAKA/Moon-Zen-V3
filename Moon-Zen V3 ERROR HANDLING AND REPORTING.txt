@@ -1,0 +1,17 @@
+### ERROR HANDLING AND REPORTING
+
+**Moon-Zen V3** is designed with robust error-handling mechanisms to ensure a smooth and reliable experience. The script utilizes `xpcall` and `pcall` functions to manage unexpected errors and minimize crashes. While every effort has been made to create a stable and bug-free script, errors can still occur due to various factors, such as changes in the game, executor compatibility issues, or conflicts with other scripts.
+
+#### Error Handling:
+- **Automatic Error Management:** The script is equipped with error handling that catches and manages unexpected issues. If an error occurs, the script will attempt to continue running without disrupting your gameplay experience.
+- **Notifications:** If a critical error occurs that the script cannot handle, you may receive an in-game notification informing you of the issue. This allows you to take appropriate action, such as restarting the script or adjusting your settings.
+
+#### Troubleshooting:
+- **Common Errors:** If you encounter common errors such as features not working as expected or the script not loading correctly, try restarting the game and executor, ensuring that you are using a compatible executor, and disabling other scripts that may conflict with Moon-Zen V3.
+- **Executor Compatibility:** Ensure that your executor is up to date and supports the features used in Moon-Zen V3. Some executors may have limitations that prevent certain features from working correctly.
+
+#### Reporting Issues:
+- **Discord Support:** If you experience persistent issues or encounter errors that are not automatically resolved, you can report them to the creator for further assistance. Please provide as much detail as possible about the error, including any error messages and the conditions under which the error occurred. Contact me on Discord at `meowbucks` for support.
+- **Updates and Patches:** The script may receive updates to address known issues or improve functionality. It is recommended to check for updates periodically and apply them to ensure optimal performance.
+
+By using Moon-Zen V3, you acknowledge that errors can occur, and while the script is designed to handle them effectively, the creator cannot guarantee a completely error-free experience. Use the script with the understanding that it is provided "as is," and any issues that arise are managed to the best of the creator's ability.

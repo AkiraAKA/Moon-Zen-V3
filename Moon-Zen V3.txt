@@ -1,0 +1,199 @@
+-- Moon-Zen V3
+
+local xpcall = xpcall
+local pcall = pcall
+
+local library = loadstring(game:HttpGet('https://raw.githubusercontent.com/jakepscripts/moonlib/main/moonlibv1.lua'))()
+
+local MoonZen = library:Window("Moon-Zen V3")
+
+getgenv().Settings = {
+    SilentAim = true,
+    AimbotEnabled = true,
+    ESPEnabled = true,
+    TracersEnabled = true,
+    BoxesEnabled = true,
+    NamesEnabled = true,
+    KillAllEnabled = true,
+    AimbotFOV = 100,
+    AimbotSmoothness = 2
+}
+
+local function notify(title, message)
+    game.StarterGui:SetCore("SendNotification", {
+        Title = title,
+        Text = message,
+        Duration = 5
+    })
+end
+
+notify("Moon-Zen V3", "Moon-Zen V3 Has Loaded!")
+notify("Moon-Zen V3", "discord - meowbucks")
+
+local function findNearestZombie()
+    local nearestZombie = nil
+    local shortestDistance = math.huge
+    local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+
+    for _, zombie in pairs(game.Workspace.Zombies:GetChildren()) do
+        if zombie:IsA("Model") and zombie:FindFirstChild("Humanoid") and zombie.Humanoid.Health > 0 then
+            local distance = (zombie.HumanoidRootPart.Position - playerPos).Magnitude
+            if distance < shortestDistance and distance < getgenv().Settings.AimbotFOV then
+                shortestDistance = distance
+                nearestZombie = zombie
+            end
+        end
+    end
+
+    return nearestZombie
+end
+
+local function Aimbot()
+    while getgenv().Settings.AimbotEnabled do
+        local nearestZombie = findNearestZombie()
+        if nearestZombie then
+            local aimPos = nearestZombie.HumanoidRootPart.Position
+            local playerCamera = workspace.CurrentCamera
+            local smoothAimPos = playerCamera.CFrame:Lerp(CFrame.new(aimPos), getgenv().Settings.AimbotSmoothness)
+            playerCamera.CFrame = smoothAimPos
+        end
+        wait(0.05)
+    end
+end
+
+local function SilentAim()
+    local mt = getrawmetatable(game)
+    local backupNamecall = mt.__namecall
+    setreadonly(mt, false)
+
+    mt.__namecall = newcclosure(function(...)
+        local args = {...}
+        local method = getnamecallmethod()
+
+        if getgenv().Settings.SilentAim and tostring(method) == "FireServer" then
+            local nearestZombie = findNearestZombie()
+            if nearestZombie then
+                args[2] = nearestZombie.HumanoidRootPart.Position
+                return backupNamecall(unpack(args))
+            end
+        end
+
+        return backupNamecall(...)
+    end)
+
+    setreadonly(mt, true)
+end
+
+local function ESP()
+    while getgenv().Settings.ESPEnabled do
+        for _, zombie in pairs(game.Workspace.Zombies:GetChildren()) do
+            if zombie:IsA("Model") and zombie:FindFirstChild("Humanoid") then
+                if not zombie:FindFirstChild("BoxHandleAdornment") then
+                    local espBox = Instance.new("BoxHandleAdornment", zombie)
+                    espBox.Size = zombie.HumanoidRootPart.Size
+                    espBox.Adornee = zombie.HumanoidRootPart
+                    espBox.ZIndex = 10
+                    espBox.AlwaysOnTop = true
+                    espBox.Color3 = Color3.fromRGB(255, 0, 0)
+                    espBox.Transparency = 0.5
+                end
+
+                if getgenv().Settings.TracersEnabled and not zombie:FindFirstChild("Tracer") then
+                    local tracer = Instance.new("Part", zombie)
+                    tracer.Name = "Tracer"
+                    tracer.Anchored = true
+                    tracer.CanCollide = false
+                    tracer.Size = Vector3.new(0.05, 0.05, (game.Players.LocalPlayer.Character.Head.Position - zombie.Head.Position).Magnitude)
+                    tracer.Color = Color3.fromRGB(0, 255, 0)
+                    tracer.Transparency = 0.5
+                    tracer.CFrame = CFrame.new(game.Players.LocalPlayer.Character.Head.Position, zombie.Head.Position) * CFrame.new(0, 0, -tracer.Size.Z / 2)
+                    tracer.Parent = game.Workspace
+                end
+
+                if getgenv().Settings.NamesEnabled and not zombie:FindFirstChild("NameTag") then
+                    local nameTag = Instance.new("BillboardGui", zombie)
+                    nameTag.Name = "NameTag"
+                    nameTag.Size = UDim2.new(1, 0, 1, 0)
+                    nameTag.AlwaysOnTop = true
+                    nameTag.Adornee = zombie.Head
+
+                    local textLabel = Instance.new("TextLabel", nameTag)
+                    textLabel.Text = zombie.Name
+                    textLabel.Size = UDim2.new(1, 0, 1, 0)
+                    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+                    textLabel.BackgroundTransparency = 1
+                    textLabel.TextScaled = true
+                end
+            end
+        end
+        wait(0.1)
+    end
+end
+
+local function KillAll()
+    while getgenv().Settings.KillAllEnabled do
+        local tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+        if tool and tool:FindFirstChild("Handle") then
+            for _, zombie in pairs(game.Workspace.Zombies:GetChildren()) do
+                if zombie:IsA("Model") and zombie:FindFirstChild("Humanoid") then
+                    zombie.Humanoid.Health = 0
+                end
+            end
+        end
+        wait(0.5)
+    end
+end
+
+local function ExecuteWithSafety(func)
+    xpcall(function()
+        pcall(func)
+    end, function(err)
+        warn("Error occurred: ", err)
+    end)
+end
+
+-- GUI Elements using MoonLib
+MoonZen:Toggle("Silent Aim", function(state)
+    getgenv().Settings.SilentAim = state
+end, getgenv().Settings.SilentAim)
+
+MoonZen:Toggle("Aimbot", function(state)
+    getgenv().Settings.AimbotEnabled = state
+    if state then
+        ExecuteWithSafety(Aimbot)
+    end
+end, getgenv().Settings.AimbotEnabled)
+
+MoonZen:Slider("Aimbot FOV", 0, 360, getgenv().Settings.AimbotFOV, function(value)
+    getgenv().Settings.AimbotFOV = value
+end)
+
+MoonZen:Slider("Aimbot Smoothness", 1, 10, getgenv().Settings.AimbotSmoothness, function(value)
+    getgenv().Settings.AimbotSmoothness = value
+end)
+
+MoonZen:Toggle("ESP", function(state)
+    getgenv().Settings.ESPEnabled = state
+    if state then
+        ExecuteWithSafety(ESP)
+    end
+end, getgenv().Settings.ESPEnabled)
+
+MoonZen:Toggle("Tracers", function(state)
+    getgenv().Settings.TracersEnabled = state
+end, getgenv().Settings.TracersEnabled)
+
+MoonZen:Toggle("Boxes", function(state)
+    getgenv().Settings.BoxesEnabled = state
+end, getgenv().Settings.BoxesEnabled)
+
+MoonZen:Toggle("Names", function(state)
+    getgenv().Settings.NamesEnabled = state
+end, getgenv().Settings.NamesEnabled)
+
+MoonZen:Toggle("Kill All", function(state)
+    getgenv().Settings.KillAllEnabled = state
+    if state then
+        ExecuteWithSafety(KillAll)
+    end
+end, getgenv().Settings.KillAllEnabled)
